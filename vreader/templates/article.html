@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=0.9, user-scalable=no, viewport-fit=cover"
+    />
+    <title>VReader - {{ metadata.title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      #content {
+        h1 {
+          font-size: 1.75em;
+          font-weight: 400;
+        }
+        h2 {
+          font-size: 1.25em;
+        }
+        p {
+          margin-top: 0.25em;
+          margin-bottom: 1.5em;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-slate-200">
+    <header class="w-screen h-16 bg-slate-300 mb-5">
+      <div
+	class="flex px-2 h-16 w-11/12 md:w-5/6 mx-auto rounded bg-slate-300"
+      >
+	<a class="font-bold flex justify-center items-center" href="/">All Articles</a>
+      </div>
+    </header>
+    <div
+      id="content"
+      class="w-11/12 md:w-5/6 mx-auto rounded px-10 py-5 bg-slate-300"
+    >
+      <div class="flex justify-center pb-5 w-full">
+	<a target="_blank" href="https://www.youtube.com/watch?v={{ metadata.video_id }}">
+	  <img class="h-32 rounded" src="https://i.ytimg.com/vi_webp/{{ metadata.video_id }}/maxresdefault.webp"></img>
+	</a>
+      </div>
+      <hr class="border-gray-500 pb-5" />
+      {{ markdown_html|safe }}
+    </div>
+  </body>
+</html>
