@@ -10,12 +10,23 @@ sanitizer = Sanitizer()
 
 @bp.route("/", methods=["GET"])
 def main_entry():
-
+    # Get Files
     directory = str(Config.DATA_PATH)
-
     all_files = os.listdir(directory)
     markdown_files = [file for file in all_files if file.endswith(".md")]
-    articles = [parse_filename(file) for file in markdown_files]
+
+    # Get Create Time
+    file_info_list = []
+    for filename in markdown_files:
+        file_path = os.path.join(directory, filename)
+        creation_time = os.path.getctime(file_path)
+        file_info_list.append((filename, creation_time))
+
+    # Sort Create Time (Recent First)
+    file_info_list.sort(key=lambda x: x[1], reverse=True)
+
+    # Get Articles
+    articles = [parse_filename(item[0]) for item in file_info_list]
 
     return make_response(render_template("index.html", articles=articles))
 
