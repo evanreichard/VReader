@@ -1,2 +1,3 @@
 recursive-include vreader/api *.py
 recursive-include vreader/templates *
+recursive-include vreader/static *

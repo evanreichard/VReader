@@ -4,17 +4,9 @@ from flask import Blueprint, request
 from vreader.config import Config
 import vreader
 
+
 bp = Blueprint("v1", __name__, url_prefix="/api/v1")
 
-@bp.route("/articles", methods=["GET"])
-def articles():
-    directory = str(Config.DATA_PATH)
-
-    all_files = os.listdir(directory)
-    markdown_files = [file for file in all_files if file.endswith(".md")]
-    articles = [parse_filename(file) for file in markdown_files]
-
-    return articles
 
 @bp.route("/generate", methods=["POST"])
 def generate():

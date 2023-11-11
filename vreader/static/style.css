@@ -1,0 +1,68 @@
+/* ----------------------------- */
+/* -------- PWA Styling -------- */
+/* ----------------------------- */
+html,
+body {
+  overscroll-behavior-y: none;
+  margin: 0px;
+}
+
+html {
+  height: calc(100% + env(safe-area-inset-bottom));
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) 0
+    env(safe-area-inset-left);
+}
+
+main {
+  height: calc(100dvh - 4rem - env(safe-area-inset-top));
+}
+
+#container {
+  padding-bottom: calc(5em + env(safe-area-inset-bottom) * 2);
+}
+
+/* No Scrollbar - IE, Edge, Firefox */
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* No Scrollbar - WebKit */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* ----------------------------- */
+/* ----------- Theme ----------- */
+/* ----------------------------- */
+@media (prefers-color-scheme: light) {
+  html {
+    --color-primary: #f3f4f6;
+    --color-secondary: #e5e7eb;
+    --color-tertiary: #d1d5db;
+    --color-primary-text: #1f2937;
+    --color-secondary-text: #4b5563;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    --color-primary: #091b1b;
+    --color-secondary: #123636;
+    --color-tertiary: #1f5c5c;
+    --color-primary-text: #ffffff;
+    --color-secondary-text: #d6f1ed;
+  }
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+  html {
+    --color-primary: #091B1B;
+    --color-secondary: #123636;
+    --color-tertiary: #1F5C5C;
+    --color-primary-text: #FFFFFF;
+    --color-secondary-text: #D6F1ED;
+  }
+}
+*/

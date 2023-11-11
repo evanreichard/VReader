@@ -2,39 +2,50 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=0.9, user-scalable=no, viewport-fit=cover"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="theme-color" content="#E5E7EB" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#123636" media="(prefers-color-scheme: dark)">
+
     <title>VReader - Home</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/tailwind.css">
   </head>
-  <body class="bg-slate-200">
-    <header class="w-screen h-16 bg-slate-300 mb-5">
+  <body class="text-ptext bg-secondary">
+    <header class="w-screen h-16 bg-secondary">
       <div
-	class="flex px-2 h-16 w-11/12 md:w-5/6 mx-auto rounded bg-slate-300"
+	class="flex px-2 h-16 w-11/12 md:w-5/6 mx-auto"
       >
-	<span class="font-bold flex justify-center items-center">VReader</span>
+	<a class="flex gap-2 justify-center items-center" href="/">
+	  <img class="h-10 rounded items-center" src="/static/icons/icon512.png"></img>
+	  <span class="font-bold flex justify-center items-center">VReader</span>
+	</a>
       </div>
     </header>
 
-    <main class="flex flex-col gap-4">
-      <div id="submit"
-        class="flex gap-4 items-center text-lg w-11/12 md:w-4/6 mx-auto rounded px-6 py-3 bg-slate-300"
-      >
-	<input type="text" placeholder="YouTube URL" class="w-full p-2 bg-gray-700 text-white">
-	<button class="p-2 bg-gray-500 text-gray-800 hover:bg-gray-100" type="submit">Generate</button>
-      </div>
+    <main class="relative overflow-hidden bg-primary">
+      <div id="container" class="h-[100dvh] flex flex-col gap-3 px-4 overflow-auto md:px-6 mt-3">
+	<div id="submit"
+	  class="flex gap-4 items-center text-lg w-11/12 md:w-4/6 mx-auto rounded px-6 py-3 bg-secondary transition-all duration-200"
+	>
+	  <input type="text" placeholder="YouTube URL" class="w-full px-2 py-1 bg-tertiary text-stext rounded">
+	  <button class="px-2 py-1 bg-tertiary text-stext hover:bg-primary rounded">Generate</button>
+	</div>
 
-      {% for article in articles %}
-      <a
-        href="/articles/{{ article.video_id }}"
-        class="flex items-center text-lg w-11/12 md:w-4/6 mx-auto rounded px-6 py-3 bg-slate-300 hover:bg-slate-400 transition-all duration-200"
-      >
-	<img class="h-14 md:h-24 mr-6 rounded" src="https://i.ytimg.com/vi_webp/{{ article.video_id }}/maxresdefault.webp"></img>
-        <span>{{ article.title }}</span>
-      </a>
-      {% endfor %}
+	{% for article in articles %}
+	<a
+	  href="/articles/{{ article.video_id }}"
+	  class="flex items-center text-lg w-11/12 md:w-4/6 mx-auto rounded px-6 py-3 bg-secondary hover:bg-tertiary transition-all duration-200"
+	>
+	  <img class="h-14 md:h-24 mr-6 rounded" src="https://i.ytimg.com/vi_webp/{{ article.video_id }}/maxresdefault.webp"></img>
+	  <span>{{ article.title }}</span>
+	</a>
+	{% endfor %}
+	<div class="mb-0.5"></div>
+      </div>
     </main>
     <script>
       const LOADING_SVG = `<svg
@@ -90,14 +101,6 @@
           fetchObj.body = JSON.stringify(data.data || {});
 
         return fetch(data.url, fetchObj).then((resp) => resp.json());
-      }
-
-      function getVideoArticle(videoID) {
-        return apiCall({
-          url: "/api/v1/generate",
-          method: "POST",
-          data: { video: videoID },
-        });
       }
 
       function generateAction(){

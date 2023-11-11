@@ -1,12 +1,24 @@
 from flask import Blueprint
-from flask import make_response, render_template
+from flask import make_response, render_template, send_from_directory
 from html_sanitizer import Sanitizer
 from markdown import markdown
 from vreader.config import Config
 import os
 
+
 bp = Blueprint("common", __name__)
 sanitizer = Sanitizer()
+
+
+@bp.route("/static/<path:path>")
+def static(path):
+    return send_from_directory("static", path)
+
+
+@bp.route("/manifest.json")
+def manifest():
+    return send_from_directory("static", "manifest.json")
+
 
 @bp.route("/", methods=["GET"])
 def main_entry():
@@ -29,6 +41,7 @@ def main_entry():
     articles = [parse_filename(item[0]) for item in file_info_list]
 
     return make_response(render_template("index.html", articles=articles))
+
 
 @bp.route("/articles/<id>", methods=["GET"])
 def article_item(id):

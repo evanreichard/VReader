@@ -2,45 +2,59 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=0.9, user-scalable=no, viewport-fit=cover"
-    />
-    <title>VReader - {{ metadata.title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="theme-color" content="#E5E7EB" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#123636" media="(prefers-color-scheme: dark)">
+
+    <!-- Markdown Overrides -->
     <style>
       h1 {
+	color: var(--color-primary-text);
 	font-size: 1.50em !important;
 	font-weight: 500 !important;
       }
       h2 {
+	color: var(--color-primary-text);
 	font-size: 1.25em !important;
       }
       p {
+	color: var(--color-secondary-text);
 	margin-top: 0.25em !important;
 	margin-bottom: 1.5em !important;
       }
     </style>
+
+    <title>VReader - {{ metadata.title }}</title>
+
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/tailwind.css">
   </head>
-  <body class="bg-slate-200">
-    <header class="w-screen h-16 bg-slate-300 mb-5">
+  <body class="text-ptext bg-secondary">
+    <header class="w-screen h-16 bg-secondary">
       <div
-	class="flex px-2 h-16 w-11/12 md:w-5/6 mx-auto rounded bg-slate-300"
+	class="flex px-2 h-16 w-11/12 md:w-5/6 mx-auto"
       >
-	<a class="font-bold flex justify-center items-center" href="/">All Articles</a>
-      </div>
-    </header>
-    <div
-      id="content"
-      class="w-11/12 md:w-5/6 mx-auto rounded px-10 py-5 bg-slate-300"
-    >
-      <div class="flex justify-center pb-5 w-full">
-	<a target="_blank" href="https://www.youtube.com/watch?v={{ metadata.video_id }}">
-	  <img class="h-32 rounded" src="https://i.ytimg.com/vi_webp/{{ metadata.video_id }}/maxresdefault.webp"></img>
+	<a class="flex gap-2 justify-center items-center" href="/">
+	  <img class="h-10 rounded items-center" src="/static/icons/icon512.png"></img>
+	  <span class="font-bold flex justify-center items-center">VReader</span>
 	</a>
       </div>
-      <hr class="border-gray-500 pb-5" />
-      {{ markdown_html|safe }}
-    </div>
+    </header>
+    <main class="relative overflow-hidden bg-primary">
+      <div id="container" class="h-[100dvh] overflow-auto md:px-6 w-11/12 md:w-5/6 mx-auto mt-3">
+	<div id="content" class="rounded bg-secondary p-6 mb-3">
+	  <div class="flex justify-center w-full mb-6">
+	    <a target="_blank" href="https://www.youtube.com/watch?v={{ metadata.video_id }}">
+	      <img class="h-32 rounded" src="https://i.ytimg.com/vi_webp/{{ metadata.video_id }}/maxresdefault.webp"></img>
+	    </a>
+	  </div>
+	  <hr class="border-primary pb-5" />
+	  {{ markdown_html|safe }}
+	</div>
+      </div>
+    </main>
   </body>
 </html>

@@ -1,6 +1,14 @@
-# VReader
+<p><img align="center" src="https://gitea.va.reichard.io/evan/VReader/raw/branch/master/banner.png"></p>
 
-Turn YouTube videos into articles! I banged this one out in a couple of hours, so it's a bit scrappy. Will slowly improve it.
+<p align="center">
+    <a href="https://drone.va.reichard.io/evan/VReader" target="_blank">
+        <img src="https://drone.va.reichard.io/api/badges/evan/VReader/status.svg">
+    </a>
+</p>
+
+---
+
+VReader allows you to take videos from YouTube and convert them into articles!
 
 ## Running Server
 

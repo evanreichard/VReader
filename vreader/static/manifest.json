@@ -1,0 +1,17 @@
+{
+  "name": "VReader",
+  "short_name": "VReader",
+  "lang": "en-US",
+  "theme_color": "#123636",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "/static/icons/icon512.png",
+      "type": "image/png"
+    }
+  ]
+}
