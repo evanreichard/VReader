@@ -25,20 +25,13 @@ def main_entry():
     # Get Files
     directory = str(Config.DATA_PATH)
     all_files = os.listdir(directory)
+
+    # Sort Files
     markdown_files = [file for file in all_files if file.endswith(".md")]
+    markdown_files = sorted(markdown_files, reverse=True)
 
-    # Get Create Time
-    file_info_list = []
-    for filename in markdown_files:
-        file_path = os.path.join(directory, filename)
-        creation_time = os.path.getctime(file_path)
-        file_info_list.append((filename, creation_time))
-
-    # Sort Create Time (Recent First)
-    file_info_list.sort(key=lambda x: x[1], reverse=True)
-
-    # Get Articles
-    articles = [parse_filename(item[0]) for item in file_info_list]
+    # Get Article Metadata
+    articles = [get_article_metadata(filename, directory) for filename in markdown_files]
 
     return make_response(render_template("index.html", articles=articles))
 
@@ -51,7 +44,7 @@ def article_item(id):
             render_template("error.html", status=404, message="Invalid Article")
         ), 404
 
-    metadata = get_article_metadata(id)
+    metadata = find_article(id)
     if not metadata:
         return make_response(
             render_template("error.html", status=404, message="Invalid Article")
@@ -72,23 +65,23 @@ def article_item(id):
         ), 404
 
 
-def get_article_metadata(id):
+def find_article(id):
     directory = str(Config.DATA_PATH)
     files = os.listdir(directory)
-    for file_name in files:
-        if file_name.startswith(id) and file_name.endswith(".md"):
-            file_path = os.path.join(directory, file_name)
-            metadata = parse_filename(file_name)
-            metadata["filepath"] = file_path
-            return metadata
-    return None
+
+    # Find Filename
+    filename = next((x for x in files if x[15:26] == id and x.endswith(".md")), None)
+    if filename is None:
+        return None
+
+    # Normalize File Info
+    return get_article_metadata(filename, directory)
 
 
-def parse_filename(filename):
-    video_id = filename[:11]
-    title = filename[12:][:-3]
-
+def get_article_metadata(filename, directory):
     return {
-        "video_id": video_id,
-        "title": title
+        "date": filename[:14],
+        "video_id": filename[15:26],
+        "title": filename[27:][:-3],
+        "filepath": os.path.join(directory, filename)
     }

@@ -15,10 +15,11 @@ html {
 
 main {
   height: calc(100dvh - 4rem - env(safe-area-inset-top));
+  overflow: hidden;
 }
 
 #container {
-  padding-bottom: calc(5em + env(safe-area-inset-bottom) * 2);
+  padding-bottom: calc(5.5em + env(safe-area-inset-bottom) * 2);
 }
 
 /* No Scrollbar - IE, Edge, Firefox */

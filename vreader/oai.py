@@ -5,7 +5,7 @@ import json
 import openai
 
 PROMPT_TEMPLATE = """
-The following is a video transcription. Write a fully comprehensive article in markdown appropriately utilizing subsections. Be sure to only use the following transcription to write the article:
+The following is a video transcription. Write a fully comprehensive article in markdown appropriately utilizing subsections. Do not reference the video. Be sure to only use the following transcription to write the article:
 
 {context}
 """

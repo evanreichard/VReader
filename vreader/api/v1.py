@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from os import path
 from flask import Blueprint, request
 from vreader.config import Config
@@ -21,7 +22,7 @@ def generate():
     if len(video) != 11:
         return {"error": "Invalid VideoID"}
 
-    metadata = get_article_metadata(video)
+    metadata = find_article(video)
     if metadata is not None:
         return {"video": video}
 
@@ -35,36 +36,37 @@ def generate():
     directory = str(Config.DATA_PATH)
     title = resp.get("title")
     content = resp.get("content")
+    date = datetime.strftime(datetime.utcnow(), "%Y%m%d%H%M%S")
 
     # Derive Filename
-    new_title = f"{video}_{title}"
-    file_path = path.join(directory, f"{new_title}.md")
+    new_title = f"{date}_{video}_{title}"
+    filepath = path.join(directory, f"{new_title}.md")
 
     # Write File
-    file = open(file_path, 'w', encoding='utf-8')
+    file = open(filepath, 'w', encoding='utf-8')
     file.write(content)
     file.close()
 
     return { "title": resp["title"] }
 
 
-def get_article_metadata(id):
+def find_article(id):
     directory = str(Config.DATA_PATH)
     files = os.listdir(directory)
-    for file_name in files:
-        if file_name.startswith(id) and file_name.endswith(".md"):
-            file_path = os.path.join(directory, file_name)
-            metadata = parse_filename(file_name)
-            metadata["filepath"] = file_path
-            return metadata
-    return None
+
+    # Find Filename
+    filename = next((x for x in files if x[15:26] == id and x.endswith(".md")), None)
+    if filename is None:
+        return None
+
+    # Normalize File Info
+    return get_article_metadata(filename, directory)
 
 
-def parse_filename(filename):
-    video_id = filename[:11]
-    title = filename[12:][:-3]
-
+def get_article_metadata(filename, directory):
     return {
-        "video_id": video_id,
-        "title": title
+        "date": filename[:14],
+        "video_id": filename[15:26],
+        "title": filename[27:][:-3],
+        "filepath": os.path.join(directory, filename)
     }

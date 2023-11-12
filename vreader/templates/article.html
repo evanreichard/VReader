@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-secondary">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no, viewport-fit=cover">
@@ -32,7 +32,7 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/tailwind.css">
   </head>
-  <body class="text-ptext bg-secondary">
+  <body class="text-ptext bg-primary">
     <header class="w-screen h-16 bg-secondary">
       <div
 	class="flex justify-between md:px-6 h-16 w-11/12 md:w-5/6 mx-auto"
@@ -82,15 +82,21 @@
       </div>
     </header>
     <main class="relative overflow-hidden bg-primary">
-      <div id="container" class="h-[100dvh] overflow-auto md:px-6 w-11/12 md:w-5/6 mx-auto mt-3">
-	<div id="content" class="rounded bg-secondary p-6 mb-3">
-	  <div class="flex justify-center w-full mb-6">
+      <div id="container" class="h-[100dvh] md:px-6 w-11/12 md:w-5/6 mx-auto">
+	<div id="content" class="h-full flex flex-col overflow-auto rounded bg-secondary px-6 pt-6 gap-4 my-3">
+	  <div class="flex justify-center w-full">
 	    <a target="_blank" href="https://www.youtube.com/watch?v={{ metadata.video_id }}">
 	      <img class="h-32 rounded" src="https://i.ytimg.com/vi_webp/{{ metadata.video_id }}/maxresdefault.webp"></img>
 	    </a>
 	  </div>
-	  <hr class="border-primary pb-5" />
-	  {{ markdown_html|safe }}
+	  <div class="mx-auto flex justify-center gap-4 italic">
+	    <span class="font-extrabold">NOTE:</span>
+	    <span>The following is automatically generated and has not been proofread. It is possible that the generated article contains inaccuracies.</span>
+	  </div>
+	  <hr class="border-2 border-primary rounded" />
+	  <div>
+	    {{ markdown_html|safe }}
+	  </div>
 	</div>
       </div>
     </main>
