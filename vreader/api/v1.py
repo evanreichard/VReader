@@ -1,9 +1,10 @@
 import os
+import vreader
+
+from . import find_article
 from datetime import datetime
-from os import path
 from flask import Blueprint, request
 from vreader.config import Config
-import vreader
 
 
 bp = Blueprint("v1", __name__, url_prefix="/api/v1")
@@ -40,7 +41,7 @@ def generate():
 
     # Derive Filename
     new_title = f"{date}_{video}_{title}"
-    filepath = path.join(directory, f"{new_title}.md")
+    filepath = os.path.join(directory, f"{new_title}.md")
 
     # Write File
     file = open(filepath, 'w', encoding='utf-8')
@@ -48,25 +49,3 @@ def generate():
     file.close()
 
     return { "title": resp["title"] }
-
-
-def find_article(id):
-    directory = str(Config.DATA_PATH)
-    files = os.listdir(directory)
-
-    # Find Filename
-    filename = next((x for x in files if x[15:26] == id and x.endswith(".md")), None)
-    if filename is None:
-        return None
-
-    # Normalize File Info
-    return get_article_metadata(filename, directory)
-
-
-def get_article_metadata(filename, directory):
-    return {
-        "date": filename[:14],
-        "video_id": filename[15:26],
-        "title": filename[27:][:-3],
-        "filepath": os.path.join(directory, filename)
-    }
