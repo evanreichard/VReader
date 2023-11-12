@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="theme-color" content="#E5E7EB" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#123636" media="(prefers-color-scheme: dark)">
+
+    <title>VReader - Error</title>
+
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="stylesheet" href="/static/tailwind.css" />
+  </head>
+  <body class="bg-secondary flex flex-col justify-center h-screen">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      <div class="mx-auto max-w-screen-sm text-center">
+        <h1
+          class="mb-4 text-7xl tracking-tight font-extrabold lg:text-9xl text-stext"
+        >
+          {{ status }}
+        </h1>
+        <p
+          class="mb-8 text-3xl tracking-tight font-bold text-ptext md:text-4xl"
+        >
+          {{ message }}
+        </p>
+        <a
+          href="/"
+          class="px-2 py-1 bg-tertiary text-stext hover:bg-primary rounded"
+          >Back to Homepage</a
+        >
+      </div>
+    </div>
+  </body>
+</html>

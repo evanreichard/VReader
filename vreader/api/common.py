@@ -47,11 +47,15 @@ def main_entry():
 def article_item(id):
 
     if len(id) != 11:
-        return make_response(render_template("404.html")), 404
+        return make_response(
+            render_template("error.html", status=404, message="Invalid Article")
+        ), 404
 
     metadata = get_article_metadata(id)
     if not metadata:
-        return make_response(render_template("404.html")), 404
+        return make_response(
+            render_template("error.html", status=404, message="Invalid Article")
+        ), 404
 
     try:
         with open(metadata["filepath"], 'r', encoding='utf-8') as file:
@@ -62,8 +66,10 @@ def article_item(id):
         return make_response(
             render_template("article.html", metadata=metadata, markdown_html=markdown_html)
         )
-    except Exception as _:
-        return make_response(render_template("404.html")), 404
+    except Exception as e:
+        return make_response(
+            render_template("error.html", status=404, message=e)
+        ), 404
 
 
 def get_article_metadata(id):
