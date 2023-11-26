@@ -21,6 +21,10 @@ def static(path):
 def manifest():
     return send_from_directory("static", "manifest.json")
 
+@bp.route("/favicon.ico")
+def favicon():
+    return send_from_directory("static", "favicon.ico")
+
 
 @bp.route("/", methods=["GET"])
 def main_entry():
